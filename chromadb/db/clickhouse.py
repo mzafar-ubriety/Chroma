@@ -587,6 +587,7 @@ class Clickhouse(DB):
         embeddings: Optional[Embeddings] = None,
         n_results: int = 10,
         where_document: WhereDocument = {},
+        where_id: str = None,
     ) -> Tuple[List[List[UUID]], npt.NDArray]:
         # Either the collection name or the collection uuid must be provided
         if collection_uuid is None:
@@ -609,10 +610,20 @@ class Clickhouse(DB):
         else:
             ids = None
 
+        if where_id:
+            ids = self.get_uuids(where_id)
+
         index = self._index(collection_uuid)
         uuids, distances = index.get_nearest_neighbors(embeddings, n_results, ids)
 
         return uuids, distances
+
+    def get_uuids(self, where_id: str) -> List[UUID]:
+        result = self.raw_sql(f"SELECT uuid FROM embeddings WHERE id IN({where_id})")
+        ids = []
+        for row in result.values:
+            ids.append(UUID(row[0]))
+        return ids
 
     @override
     def create_index(self, collection_uuid: UUID):

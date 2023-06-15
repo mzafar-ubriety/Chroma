@@ -274,6 +274,7 @@ class API(Component, ABC):
         n_results: int = 10,
         where: Where = {},
         where_document: WhereDocument = {},
+        where_id: str = None,
         include: Include = ["embeddings", "metadatas", "documents", "distances"],
     ) -> QueryResult:
         """Gets the nearest neighbors of a single embedding

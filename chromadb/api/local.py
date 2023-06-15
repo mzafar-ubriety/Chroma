@@ -452,12 +452,14 @@ class LocalAPI(API):
         n_results: int = 10,
         where: Where = {},
         where_document: WhereDocument = {},
+        where_id: str = None,
         include: Include = ["documents", "metadatas", "distances"],
     ) -> QueryResult:
         uuids, distances = self._db.get_nearest_neighbors(
             collection_uuid=collection_id,
             where=where,
             where_document=where_document,
+            where_id=where_id,
             embeddings=query_embeddings,
             n_results=n_results,
         )

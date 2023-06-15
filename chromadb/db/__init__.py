@@ -120,6 +120,7 @@ class DB(Component):
         embeddings: Optional[Embeddings] = None,
         n_results: int = 10,
         where_document: WhereDocument = {},
+        where_id: str = None,
     ) -> Tuple[List[List[UUID]], npt.NDArray]:
         pass
 

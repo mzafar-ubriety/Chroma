@@ -159,6 +159,7 @@ class Collection(BaseModel):
         query_texts: Optional[OneOrMany[Document]] = None,
         n_results: int = 10,
         where: Optional[Where] = None,
+        where_id: Optional[str] = None,
         where_document: Optional[WhereDocument] = None,
         include: Include = ["metadatas", "documents", "distances"],
     ) -> QueryResult:
@@ -226,6 +227,7 @@ class Collection(BaseModel):
             n_results=n_results,
             where=where,
             where_document=where_document,
+            where_id=where_id,
             include=include,
         )
 
